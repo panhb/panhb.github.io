@@ -1,0 +1,12 @@
+encoding : utf-8
+
+permalink: /:year/:month/:day/:title
+
+name: Panhb
+url: "http://panhb.github.io"
+
+title : panhb的随想
+
+disqus: panhb
+
+paginate: 5

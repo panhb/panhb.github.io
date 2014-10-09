@@ -1,7 +1,67 @@
+---
+layout: none
+---
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>{{ site.title }}</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
+<header>
+    <div class="wrapper">    
+        <nav>
+            <ul class="main_nav">
+                <li class="current"><a href="#">博客</a></li>
+                <li><a href="#">关于</a></li>
+                <li><a href="#">联系</a></li>
+            </ul>
+        </nav>
+    </div>
+  </header>
+      <section class="main wrapper">
+		{% for post in paginator.posts %}
+			<article>
+              <div class="article_image">
+			  <a href="{{ post.url }}"><img src="{{ post.img }}" alt="" title=""></a>
+			   </div>
+              <div class="post">
+                  <h1 class="title">
+                      <a href="{{ post.url }}">{{ post.title  }}</a>
+                  </h1>
+                  <p>{{ post.content }}</p>
+                  <a class="read_more" href="{{ post.url }}">阅读全文 <i class="read_more_arrow"></i> </a>
+              </div>
+          </article>
+		{% endfor %}
+		 
+		 <nav class="pagination">
+		{% if paginator.previous_page %}
+			{% if paginator.page == 2%}
+				<a href="/" class="previous"><i></i>上一页</a>
+			{% else %}
+				<a href="/{%if paginator.page > 1 %}page{{ paginator.previous_page }}/{% endif %}" class="previous"><i></i>上一页</a>
+			{% endif %}
+		{% endif %}
+		  
+		  
+		  {% if paginator.next_page %}
+			<a href="/page{{ paginator.next_page }}" class="next">下一页<i></i></a>
+		  {% endif %}
+		 </nav>
+		 
+	
+      </section><!-- Main End -->
+      <footer>
+        <div class="wrapper">
+        <p class="rights">© 2014 Panhb.com  -  All Rights Reserved  </p>
+        <ul class="social_profiles">
+            <li class="twitter"><a href="http://twitter.com/panhongbo" target="_blink"></a></li>
+            <li class="weibo"><a href="http://weibo.com/panhongbo" target="_blink"></a></li>
+        </ul>
+		</div>
+      </footer>
+  </body>
 </html>
