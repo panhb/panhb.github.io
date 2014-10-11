@@ -1,10 +1,15 @@
 ---
-layout:content
-author:潘宏博
-title:一些测试和感想
-place:武汉 金融港 
-img:/assets/images/pic1.jpg
-introduction:写点东西，反正也是无聊没什么事情做，这个编辑器有点意思，我还蛮喜欢这个的
+layout: content
+
+author : 潘宏博
+
+introduction : 写点东西，反正也是无聊没什么事情做，这个编辑器有点意思，我还蛮喜欢这个的
+
+title : 一些测试和感想
+
+place : 武汉 金融港
+
+img : /assets/images/pic1.jpg
 ---
 
 感觉不是一个喜欢写东西的人，都不知道要写些什么，那就记录一些感受算了
