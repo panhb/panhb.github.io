@@ -1,0 +1,46 @@
+---
+layout: none
+---
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>pageTool</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+	<script src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div >
+<ul id="page" class="pagination" ></ul>
+</div>    
+	
+</body>
+</html>
+<script>
+$(function(){
+	
+	PageInit.init({
+		totalCount:100,
+		pageSize:7, 
+		pageMax:10 
+	},function(){
+		alert("init");
+	});
+	
+});	
+
+function select(index){
+	PageInit.setPage(index,function(){
+		alert(index);
+	});
+}
+
+function previous(){
+	select(PageInit.getCurrentPage()-1);
+}
+
+function next(){
+	select(PageInit.getCurrentPage()+1);
+}
+</script>
