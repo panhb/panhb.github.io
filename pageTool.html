@@ -31,16 +31,16 @@ $(function(){
 });	
 
 function select(index){
-	pageTool.setPage(index,function(){
+	PageTool.setPage(index,function(){
 		alert(index);
 	});
 }
 
 function previous(){
-	select(pageTool.getCurrentPage()-1);
+	select(PageTool.getCurrentPage()-1);
 }
 
 function next(){
-	select(pageTool.getCurrentPage()+1);
+	select(PageTool.getCurrentPage()+1);
 }
 </script>
