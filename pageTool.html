@@ -4,7 +4,7 @@ layout: none
 <!DOCTYPE html>
 <html>
   <head>
-    <title>pageTool</title>
+    <title>pageTool演示</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
 	<script src="/assets/js/jquery-1.11.1.min.js"></script>
@@ -31,16 +31,16 @@ $(function(){
 });	
 
 function select(index){
-	PageInit.setPage(index,function(){
+	pageTool.setPage(index,function(){
 		alert(index);
 	});
 }
 
 function previous(){
-	select(PageInit.getCurrentPage()-1);
+	select(pageTool.getCurrentPage()-1);
 }
 
 function next(){
-	select(PageInit.getCurrentPage()+1);
+	select(pageTool.getCurrentPage()+1);
 }
 </script>
