@@ -61,6 +61,8 @@ function mainComments(){
 		alert("写点什么东西再发表吧");
 		return;
 	}
+	textarea=textarea.replace(/\r\n/g,'<br>');
+	textarea=textarea.replace(/\n/g,'<br>');
 	var cid="comment_"+num;
 	num++;
 	var div="<div class='line'></div>"+
@@ -80,6 +82,8 @@ function comments(id,touserid,tousername){
 		alert("写点什么东西再发表吧");
 		return;
 	}
+	textarea=textarea.replace(/\r\n/g,'<br>');
+	textarea=textarea.replace(/\n/g,'<br>');
 	var cid="comment_"+num;
 	num++;
 	var div="<br>"+
