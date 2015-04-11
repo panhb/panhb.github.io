@@ -10,6 +10,8 @@ title : 我有一个愿望
 place : 武汉 金融港
 
 img : /assets/images/pic_003.jpg
+
+year : 2014
 ---
 
 我有一个愿望，就是你过得幸福。  
