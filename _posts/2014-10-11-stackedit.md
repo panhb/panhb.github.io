@@ -9,7 +9,7 @@ title : 一些测试和感想
 
 place : 武汉 金融港
 
-img : /assets/images/pic1.jpg
+img : /assets/images/pic_002.jpg
 ---
 
 感觉不是一个喜欢写东西的人，都不知道要写些什么，那就记录一些感受算了
