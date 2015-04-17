@@ -12,6 +12,8 @@ place : 武汉 金融港
 img : /assets/images/pic_003.jpg
 
 year : 2014
+
+size : 1000x667
 ---
 
 我有一个愿望，就是你过得幸福。  

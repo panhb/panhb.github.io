@@ -12,6 +12,8 @@ place : 转载
 img : /assets/images/pic_001.jpg
 
 year : 2014
+
+size : 2048x1365
 ---
 
 1、双引号
