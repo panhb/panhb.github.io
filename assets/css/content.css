@@ -118,3 +118,7 @@ p.margin-bottom {
 .diamond {
 	padding: 0 0.250em
 }
+
+img {
+    width: 100%;
+}
