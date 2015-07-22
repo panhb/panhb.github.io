@@ -1,127 +1,36 @@
 ---
-layout: default
+layout: page
+description: "闷骚IT狗的博客"
 ---
 
-<header>
-    <div class="wrapper"> 
-<a href="/"><img src="/assets/images/logo.png" class="h_logo" alt="{{ site.name }}" title=""></a>	
-        <nav>
-            <ul class="main_nav">
-                <li class="current"><a href="/">博客</a></li>
-				<!--
-                <li><a href="/about">关于</a></li>
-                <li><a href="/contact">联系</a></li>
-				-->
-            </ul>
-        </nav>
-    </div>
-  </header>
-      <section class="main wrapper">
-		{% for post in paginator.posts %}
-			<article>
-              <div class="article_image">
-			  <!--
-			  <a href="{{ post.url }}"><img src="{{ post.img }}" alt="" title=""></a>
-			   -->
-			   <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-				  <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-						<a href="{{ post.img }}" itemprop="contentUrl" data-size="{{ post.size  }}">
-							<img src="{{ post.img }}" itemprop="thumbnail" alt="{{ post.title  }}" />
-						</a>
-					</figure>
-				</div>
-			   </div>
-              <div class="post">
-                  <h1 class="title">
-                      <a href="{{ post.url }}">{{ post.title  }}</a>
-                  </h1>
-                  <p>{{ post.introduction }}</p>
-                  <a class="read_more" href="{{ post.url }}">阅读全文 <i class="read_more_arrow"></i> </a>
-              </div>
-          </article>
-		{% endfor %}
-		 
-		 <nav class="pagination">
-		{% if paginator.previous_page %}
-			{% if paginator.page == 2%}
-				<a href="/" class="previous"><i></i>上一页</a>
-			{% else %}
-				<a href="/{%if paginator.page > 1 %}page{{ paginator.previous_page }}/{% endif %}" class="previous"><i></i>上一页</a>
-			{% endif %}
-		{% endif %}
-		  
-		  
-		  {% if paginator.next_page %}
-			<a href="/page{{ paginator.next_page }}" class="next">下一页<i></i></a>
-		  {% endif %}
-		 </nav>
-		 
-	
-      </section><!-- Main End -->
-	  
-	  <!-- Root element of PhotoSwipe. Must have class pswp. -->
-		<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+{% for post in paginator.posts %}
+<div class="post-preview">
+    <a href="{{ post.url | prepend: site.baseurl }}">
+        <h2 class="post-title">            {{ post.title }}
+        </h2>
+        {% if post.subtitle %}
+        <h3 class="post-subtitle">
+            {{ post.subtitle }}
+        </h3>
+        {% endif %}
+    </a>
+    <p class="post-meta">Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}</p>
+</div>
+<hr>
+{% endfor %}
 
-			<!-- Background of PhotoSwipe. 
-				 It's a separate element, as animating opacity is faster than rgba(). -->
-			<div class="pswp__bg"></div>
-
-			<!-- Slides wrapper with overflow:hidden. -->
-			<div class="pswp__scroll-wrap">
-
-				<!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
-				<!-- don't modify these 3 pswp__item elements, data is added later on. -->
-				<div class="pswp__container">
-					<div class="pswp__item"></div>
-					<div class="pswp__item"></div>
-					<div class="pswp__item"></div>
-				</div>
-
-				<!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-				<div class="pswp__ui pswp__ui--hidden">
-
-					<div class="pswp__top-bar">
-
-						<!--  Controls are self-explanatory. Order can be changed. -->
-
-						<div class="pswp__counter"></div>
-
-						<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-						<button class="pswp__button pswp__button--share" title="Share"></button>
-
-						<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-						<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-						<!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-						<!-- element will get class pswp__preloader--active when preloader is running -->
-						<div class="pswp__preloader">
-							<div class="pswp__preloader__icn">
-							  <div class="pswp__preloader__cut">
-								<div class="pswp__preloader__donut"></div>
-							  </div>
-							</div>
-						</div>
-					</div>
-
-					<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-						<div class="pswp__share-tooltip"></div> 
-					</div>
-
-					<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-					</button>
-
-					<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-					</button>
-
-					<div class="pswp__caption">
-						<div class="pswp__caption__center"></div>
-					</div>
-
-				  </div>
-
-				</div>
-
-		</div>
-      
+<!-- Pager -->
+{% if paginator.total_pages > 1 %}
+<ul class="pager">
+    {% if paginator.previous_page %}
+    <li class="previous">
+        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
+    </li>
+    {% endif %}
+    {% if paginator.next_page %}
+    <li class="next">
+        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
+    </li>
+    {% endif %}
+</ul>
+{% endif %}

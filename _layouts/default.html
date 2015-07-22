@@ -1,46 +1,16 @@
-<!doctype html>
-<html class="no-js" lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{{ site.title }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/assets/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
-    <!-- Core CSS file -->
-    <link rel="stylesheet" href="/assets/css/photoswipe.css"> 
-	<!-- Skin CSS file (styling of UI - buttons, caption, etc.)
-		 In the folder of skin CSS file there are also:
-		 - .png and .svg icons sprite, 
-		 - preloader.gif (for browsers that do not support CSS animations) -->
-    <link rel="stylesheet" href="/assets/css/default-skin/default-skin.css"> 
-</head>
-<body>
-    {{ content }}
-    <footer>
-    <div class="wrapper">
-		<img class="logo_footer" src="/assets/images/logo_footer.png" alt="{{ site.name }}" title="">
-        <p class="rights">联系方式Email:391400311@qq.com&nbsp;&nbsp;&nbsp;&nbsp;作品展示&nbsp;&nbsp;<a href="http://w2r.coding.io/" title="一款极简的MarkDown编辑器和一个自由的内容分享网站" target="_blink">w2r</a>&nbsp;&nbsp;<a href="http://sping.codingapp.com/" title="搜索电影的评分和评论" target="_blink">搜评</a></p>
-		<p class="rights">© 2014 panhb.github.io  -  All Rights Reserved  </p>
-        <ul class="social_profiles">
-            <li class="twitter"><a href="http://twitter.com/pig_home" target="_blink"></a></li>
-            <li class="weibo"><a href="http://weibo.com/panhongbo" target="_blink"></a></li>
-        </ul>
-		</div>
-      </footer>
-      <!-- Core JS file -->
-      <script src="/assets/js/photoswipe.min.js"></script> 
-      <!-- UI JS file -->
-      <script src="/assets/js/photoswipe-ui-default.min.js"></script>
-      <script src="/assets/js/initphotoswipe.js"></script>
-      <script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-55632873-1', 'auto');
-	ga('send', 'pageview');
-      </script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="en">
 
+{% include head.html %}
+
+<body>
+
+    {% include nav.html %}
+
+    {{ content }}
+
+    {% include footer.html %}
+
+</body>
+
+</html>

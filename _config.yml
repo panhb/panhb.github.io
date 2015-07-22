@@ -1,14 +1,19 @@
-encoding : utf-8
-
-permalink: /:year/:month/:day/:title
-
-baseurl: /
-
-name: Panhb
+# Site settings
+title: Panhb Blog
+header-img: img/home-bg.jpg
+email: 391400311@qq.com
+description: "潘宏博的个人博客"
+baseurl: ""
 url: "http://panhb.github.io"
-
-title : panhb的随想
-
+twitter_username: pig_home
+github_username:  panhb
+facebook_username:  panhb
+weibo_username:  panhongbo
 disqus: panhb
 
+# Build settings
+markdown: kramdown
+highlighter: pygments
+permalink: pretty
 paginate: 5
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]

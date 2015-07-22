@@ -1,0 +1,41 @@
+---
+layout: page
+title: "Tags"
+header-img: "img/tags-bg.jpg"
+description: "标签分类"
+---
+<style type="text/css">
+	#tag_cloud a {
+	  text-decoration: none;
+	  color: #bb2222; 
+	}
+</style>
+<div id="tag_cloud" style="margin-bottom:1em;">
+	{% for tag in site.tags %}
+	<a  href="#{{ tag[0] }}" title="{{ tag[0] }}" rel="{{ tag[1].size }}" >{{ tag[0] }}</a>
+	{% endfor %}
+</div>
+
+
+{% for tag in site.tags %}
+<div class="one-tag-list">
+  	<span class="fa fa-tags" id="{{ tag[0] }}">{{ tag[0] }}</span>
+	{% for post in tag[1] %}
+	 <div class="post-preview">
+	    <a href="{{ post.url | prepend: site.baseurl }}">
+	        <h2 class="post-title" style="font-size:18px;">{{ post.title }}
+	        </h2>
+	        <h6>{{ post.date | date:"%Y-%m-%d" }}</h6>
+	        {% if post.subtitle %}
+	        <h3 class="post-subtitle" style="font-size:14px;">
+	            {{ post.subtitle }}
+	        </h3>
+	        {% endif %}
+	    </a>
+	    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+	</div>
+	<hr>
+	{% endfor %}
+</div>
+{% endfor %}
+
