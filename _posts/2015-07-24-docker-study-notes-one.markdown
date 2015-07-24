@@ -11,15 +11,13 @@ tags: docker
 最近在学习使用docker构建项目，原理神马的，我也将不清楚，只是做我个人学习的一个记载。   
 
 由于我是win用户，搭docker的环境，自然麻烦多多。首先就是安装Boot2Docker，基本上也就是一直下一步的节奏。但是start虚拟机的时候，可能会窗口可能会闪一下。我的原因是我的电脑的CPU虚拟机支持没有开启，只需在BIOS里面设置一下即可
-```
-Configuratio > Intel Virtual Technology > Enabled
-```  
+
+>Configuratio > Intel Virtual Technology > Enabled
+  
 
 然后daocloud提供镜像加速，win下面命令如下
-```
-boot2docker up
-boot2docker ssh "echo $'EXTRA_ARGS=\"--registry-mirror=http://8e3b4e3c.m.daocloud.io\"' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart"    
-```
+>boot2docker up     
+>boot2docker ssh "echo $'EXTRA_ARGS=\"--registry-mirror=http://8e3b4e3c.m.daocloud.io\"' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart"    
 
 然而我正在使用是docker云，并没有在本地构建环境跑，蛤蛤   
 
