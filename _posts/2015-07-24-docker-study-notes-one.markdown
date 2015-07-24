@@ -17,7 +17,8 @@ Configuratio > Intel Virtual Technology > Enabled
 
 然后daocloud提供镜像加速，win下面命令如下
 ```javascript              
-boot2docker up               
+boot2docker up   
+            
 boot2docker ssh "echo $'EXTRA_ARGS=\"--registry-mirror=http://8e3b4e3c.m.daocloud.io\"' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart"
 ```   
 
