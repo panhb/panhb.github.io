@@ -10,15 +10,16 @@ tags: docker
 
 最近在学习使用docker构建项目，原理神马的，我也将不清楚，只是做我个人学习的一个记载。   
 
-由于我是win用户，搭docker的环境，自然麻烦多多。首先就是安装Boot2Docker，基本上也就是一直下一步的节奏。但是start虚拟机的时候，可能会窗口可能会闪一下。我的原因是我的电脑的CPU虚拟机支持没有开启，只需在BIOS里面设置一下即可
-```javascript        
+由于我是win用户，搭docker的环境，自然麻烦多多。首先就是安装Boot2Docker，基本上也就是一直下一步的节奏。但是start虚拟机的时候，可能会窗口可能会闪一下。我的原因是我的电脑的CPU虚拟机支持没有开启，只需在BIOS里面设置一下即可    
+
+```       
 Configuratio > Intel Virtual Technology > Enabled
 ``` 
 
-然后daocloud提供镜像加速，win下面命令如下
-```javascript              
-boot2docker up   
-            
+然后daocloud提供镜像加速，win下面命令如下    
+
+```             
+boot2docker up               
 boot2docker ssh "echo $'EXTRA_ARGS=\"--registry-mirror=http://8e3b4e3c.m.daocloud.io\"' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart"
 ```   
 
@@ -30,4 +31,4 @@ boot2docker ssh "echo $'EXTRA_ARGS=\"--registry-mirror=http://8e3b4e3c.m.daoclou
 不过docker云唯一不好的缺点是，我在云上看不到具体构建的镜像代码，必须去github上看，感觉好麻烦。既然已经从github那clone过来了，为毛线不再搞个看代码的地方咧，不晓得以后会不会改进，获取我提的这个需求，没啥意义，好吧，我果然是个蛋疼的汉纸，蛤蛤。   
 
 
-###最后附上   [**Daocloud**](https://www.daocloud.io)   
+最后附上   [**Daocloud**](https://www.daocloud.io)   
