@@ -1,0 +1,43 @@
+---
+layout: none
+---
+<html class="no-js" lang="">
+	<head>
+		<meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>pageTool演示</title>
+		<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	</head>
+	<body>
+		<div >
+			<ul id="page" class="pagination" ></ul>
+		</div>   
+		<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script src="{{ "/js/pageTool.js " | prepend: site.baseurl }}"></script>
+		<script>
+			$(function(){	
+				PageTool.init({
+					totalCount:100,
+					pageSize:7, 
+					pageMax:10 
+				},function(){
+					alert("init");
+				});	
+			});	
+			
+			function select(index){
+				PageTool.setPage(index,function(){
+					alert(index);
+				});
+			}
+			
+			function previous(){
+				select(PageTool.getCurrentPage()-1);
+			}
+			
+			function next(){
+				select(PageTool.getCurrentPage()+1);
+			}
+		</script>	
+	</body>
+</html>
