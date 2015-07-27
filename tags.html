@@ -22,7 +22,7 @@ description: "标签分类"
   	<span class="fa fa-tags" id="{{ tag[0] }}">{{ tag[0] }}</span>
 	{% for post in tag[1] %}
 	 <div class="post-preview">
-	    <a href="{{ post.url | prepend: site.baseurl }}">
+	    <a data-pjax href="{{ post.url | prepend: site.baseurl }}">
 	        <h2 class="post-title" style="font-size:18px;">{{ post.title }}
 	        </h2>
 	        <h6>{{ post.date | date:"%Y-%m-%d" }}</h6>
