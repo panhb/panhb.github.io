@@ -1,11 +1,11 @@
 ---
 layout:     post
-title:      Dubbo学习笔记
-subtitle:   主要是Dubbo的泛化引用和实现
-date:       2016-02-05 12:00:00
+title:      今年，科科
+subtitle:   梳理一下今年都干了些啥
+date:       2015-12-30 12:00:00
 author:     Panhb
-header-img: "img/post-bg-012.jpg"
-tags: dubbo
+header-img: "img/post-bg-011.jpg"
+tags: 随笔
 ---
 
 今年呢，也没干什么大事，就做了一点微小的工作，做了一个dubbo的监控平台，专门监视使用了dubbo框架的系统。这个项目本身也在使用dubbo，主要是在使用dubbo框架的项目里加上我们的filter，通过filter获取到监控数据，以及访问控制。那说了半天，dubbo是个什么鬼呢。dubbo是阿里巴巴的一个开源的分布式服务框架，致力于提供高性能和透明化的**RPC**远程服务调用方案（以上摘抄自[*DUBBO*](http://dubbo.io/)）。github地址是[*GITHUB*](https://github.com/dubbo)。其他的我就不多说了，具体说说dubbo的泛化调用。        
