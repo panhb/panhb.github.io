@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "About"
-description: "虽然很多妹纸的皂片，但其实我是个汉纸"
+description: "糙汉纸一枚"
 header-img: "img/about-bg.jpg"
 ---
 
@@ -17,11 +17,11 @@ header-img: "img/about-bg.jpg"
 
  - 潘宏博/男/1989
  - 本科/武昌理工学院计算机科学与技术 
- - 工作年限：3.5年
+ - 工作年限：4年
  - 技术博客：http://panhb.github.io 
  - Github: http://github.com/panhb      
  - 期望职位：Java后台开发，Nodejs后台开发
- - 期望薪资：税前月薪8k~12k，特别喜欢的公司可例外
+ - 期望薪资：税前月薪9k~12k，特别喜欢的公司可例外
  - 期望城市：武汉、广州或者深圳
 
 ---
@@ -31,7 +31,10 @@ header-img: "img/about-bg.jpg"
 ## 广州亿迅武汉研发基地 （ 2015年6月 ~ 至今 ）
 
 ### BSS项目 
-目前在营销资源项目组，负责进销存部分模块的功能开发。
+集团数据服务开发，提供底层的数据支撑。
+
+### Dubbo管理平台 
+用于监控公司内部采用DUBBO框架的系统的运行情况。
 
  
 ## 纬创软件 （ 2014年6月 ~ 2015年3月 ）
@@ -69,7 +72,7 @@ header-img: "img/about-bg.jpg"
 - 数据库相关：MySQL/Oracle/MongoDB/Redis
 - 版本管理、文档和自动化部署工具：Svn/Git
 - 单元测试：JUnit
-- 云和开放平台：SAE/Coding/DaoCloud
+- 云和开放平台：DaoCloud
 
 ---
 
