@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      今年，科科
+title:      今年
 subtitle:   梳理一下今年都干了些啥
 date:       2015-12-30 12:00:00
 author:     Panhb
