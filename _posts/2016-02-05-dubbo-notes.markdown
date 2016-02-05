@@ -1,8 +1,8 @@
 ---
 layout:     post
-title:      今年，科科
-subtitle:   梳理一下今年都干了些啥
-date:       2016-02-05 12:00:00
+title:      Dubbo学习笔记
+subtitle:   主要是Dubbo的泛化引用和实现
+date:       2016-02-04 12:00:00
 author:     Panhb
 header-img: "img/post-bg-012.jpg"
 tags: dubbo
