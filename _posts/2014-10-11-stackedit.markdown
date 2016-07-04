@@ -27,16 +27,7 @@ tags: markdown
 测试一下公式，感觉还行，就是位置不能设置，这个有点蛋疼
 $$x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
 
-
- 表格略丑
-| Item      |    Value | Qty  |
-| :-------- | --------:| :--: |
-| Computer  | 1600 USD |  5   |
-| Phone     |   12 USD |  12  |
-| Pipe      |    1 USD | 234  |
-
-
-![就用我的logo来做图片测试](https://raw.githubusercontent.com/panhb/panhb.github.io/master/assets/images/logo_footer.png)
+ 表格略丑     
 
 `大致就是这样了，也没什么特殊的，样式单调了点`
 
