@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      活着的意义1
-subtitle:   活着的意义1
+title:      活着的意义
+subtitle:   活着的意义
 date:       2016-04-04 12:00:00
 author:     Panhb
 header-img: "img/post-bg-013.jpg"
