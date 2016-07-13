@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      给邱千的第二封情书
-subtitle:   我想陪你一直走下去！！！
+subtitle:   我好想你！！！
 date:       2016-07-13 00:00:00
 author:     Panhb
 header-img: "img/post-bg-016.jpg"
@@ -10,7 +10,7 @@ tags: 邱千
 
 邱千：     
 　　我好想你！！！    
-==　　　
+	==　　　
 
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　潘宏博　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　2016年7月13日
