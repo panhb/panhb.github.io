@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"panhb.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="公司目前的项目都是用的springboot进行开发，项目里面有些功能需要用到可执行程序，使用CommandLine执行命令调用，在执行命令时需要程序的绝对路径，而springboot打包插件是将所有的jar包和资源文件都打包成一个可执行的jar包，这样导致无法获取资源文件下面的可执行程序的绝对路径，导致命令无法执行。于是同事写了一个打包插件，把springboot打包成一个zip文件，并生成相关的">
+<meta name="keywords" content="spring,springboot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot通过PropertiesLauncher启动报错分析">
+<meta property="og:url" content="https://panhb.github.io/2018/05/13/springboot通过PropertiesLauncher启动报错分析/index.html">
+<meta property="og:site_name" content="panhb的天马行空">
+<meta property="og:description" content="公司目前的项目都是用的springboot进行开发，项目里面有些功能需要用到可执行程序，使用CommandLine执行命令调用，在执行命令时需要程序的绝对路径，而springboot打包插件是将所有的jar包和资源文件都打包成一个可执行的jar包，这样导致无法获取资源文件下面的可执行程序的绝对路径，导致命令无法执行。于是同事写了一个打包插件，把springboot打包成一个zip文件，并生成相关的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/panhb/images/master/res/propertieslauncher/1526196764.jpg">
+<meta property="og:updated_time" content="2022-03-15T09:26:12.222Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="springboot通过PropertiesLauncher启动报错分析">
+<meta name="twitter:description" content="公司目前的项目都是用的springboot进行开发，项目里面有些功能需要用到可执行程序，使用CommandLine执行命令调用，在执行命令时需要程序的绝对路径，而springboot打包插件是将所有的jar包和资源文件都打包成一个可执行的jar包，这样导致无法获取资源文件下面的可执行程序的绝对路径，导致命令无法执行。于是同事写了一个打包插件，把springboot打包成一个zip文件，并生成相关的">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/panhb/images/master/res/propertieslauncher/1526196764.jpg">
+
+<link rel="canonical" href="https://panhb.github.io/2018/05/13/springboot通过PropertiesLauncher启动报错分析/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>springboot通过PropertiesLauncher启动报错分析 | panhb的天马行空</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">panhb的天马行空</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://panhb.github.io/2018/05/13/springboot通过PropertiesLauncher启动报错分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="panhb">
+      <meta itemprop="description" content="你好,我是panhb,很高兴你来我的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="panhb的天马行空">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          springboot通过PropertiesLauncher启动报错分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-13 13:32:00" itemprop="dateCreated datePublished" datetime="2018-05-13T13:32:00+08:00">2018-05-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-15 17:26:12" itemprop="dateModified" datetime="2022-03-15T17:26:12+08:00">2022-03-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>公司目前的项目都是用的springboot进行开发，项目里面有些功能需要用到可执行程序，使用CommandLine执行命令调用，在执行命令时需要程序的绝对路径，而springboot打包插件是将所有的jar包和资源文件都打包成一个可执行的jar包，这样导致无法获取资源文件下面的可执行程序的绝对路径，导致命令无法执行。于是同事写了一个打包插件，把springboot打包成一个zip文件，并生成相关的启动命令，直接调用脚本即可启动程序，类似于dubbo的打包方式。<br><a id="more"></a><br>具体启动命令如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dloader.main=xxx.xxx.Application -Dloader.path=lib,config,resource,xxx.jar -Dspring.profiles.active=dev org.springframework.boot.loader.PropertiesLauncher</span><br></pre></td></tr></table></figure></p>
+<p>之前的项目都用的好好的，然后昨天我启动的时候，springboot突然报一个错误，如下图<br><img src="https://raw.githubusercontent.com/panhb/images/master/res/propertieslauncher/1526196764.jpg" alt><br>然后百度了一下，也没找出什么问题，网上说是resource下面有中文目录导致，但是并不我这个问题的原因。后来因为看到有JarFile，本身也是加载的时候报的错，就找resource下面是否有jar包，找到有几个zip包，也没多想，就删除了再启动，然后就可以正常启动了。虽然可以正常启动了，但是为什么resource下面不能放zip文件我很费解，于是就开始跟源码，找原因。<br>在github上面把springboot的源码clone下来，PropertiesLauncher源码在spring-boot-tools的spring-boot-loader下面，首先看PropertiesLauncher的main方法做了些什么<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    PropertiesLauncher launcher = <span class="keyword">new</span> PropertiesLauncher();</span><br><span class="line">    args = launcher.getArgs(args);</span><br><span class="line">    launcher.launch(args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>先创建了一个PropertiesLauncher对象，再看构造函数里面，创建对象的时候初始化了一些什么信息<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">PropertiesLauncher</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.home = getHomeDirectory();</span><br><span class="line">        initializeProperties();</span><br><span class="line">        initializePaths();</span><br><span class="line">        <span class="keyword">this</span>.parent = createArchive();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(ex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意initializePaths()方法，再跟进initializePaths方法，看到<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initializePaths</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    String path = getProperty(PATH);</span><br><span class="line">    <span class="keyword">if</span> (path != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.paths = parsePathsProperty(path);</span><br><span class="line">    &#125;</span><br><span class="line">    debug(<span class="string">"Nested archive paths: "</span> + <span class="keyword">this</span>.paths);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中PATH为loader.path，也就是我们启动命令中配置的-Dloader.path=lib,config,resource,xxx.jar，再回到main方法，继续跟进，最终落脚到getClassPathArchives方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> List&lt;Archive&gt; <span class="title">getClassPathArchives</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    List&lt;Archive&gt; lib = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (String path : <span class="keyword">this</span>.paths) &#123;</span><br><span class="line">        <span class="keyword">for</span> (Archive archive : getClassPathArchives(path)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (archive <span class="keyword">instanceof</span> ExplodedArchive) &#123;</span><br><span class="line">                List&lt;Archive&gt; nested = <span class="keyword">new</span> ArrayList&lt;&gt;(</span><br><span class="line">                        archive.getNestedArchives(<span class="keyword">new</span> ArchiveEntryFilter()));</span><br><span class="line">                nested.add(<span class="number">0</span>, archive);</span><br><span class="line">                lib.addAll(nested);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                lib.add(archive);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    addNestedEntries(lib);</span><br><span class="line">    <span class="keyword">return</span> lib;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> List&lt;Archive&gt; <span class="title">getClassPathArchives</span><span class="params">(String path)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    String root = cleanupPath(handleUrl(path));</span><br><span class="line">    List&lt;Archive&gt; lib = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    File file = <span class="keyword">new</span> File(root);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="string">"/"</span>.equals(root)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!isAbsolutePath(root)) &#123;</span><br><span class="line">            file = <span class="keyword">new</span> File(<span class="keyword">this</span>.home, root);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (file.isDirectory()) &#123;</span><br><span class="line">            debug(<span class="string">"Adding classpath entries from "</span> + file);</span><br><span class="line">            <span class="comment">//第二个参数为是否递归</span></span><br><span class="line">            Archive archive = <span class="keyword">new</span> ExplodedArchive(file, <span class="keyword">false</span>);</span><br><span class="line">            lib.add(archive);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    Archive archive = getArchive(file);</span><br><span class="line">    <span class="keyword">if</span> (archive != <span class="keyword">null</span>) &#123;</span><br><span class="line">        debug(<span class="string">"Adding classpath entries from archive "</span> + archive.getUrl() + root);</span><br><span class="line">        lib.add(archive);</span><br><span class="line">    &#125;</span><br><span class="line">    List&lt;Archive&gt; nestedArchives = getNestedArchives(root);</span><br><span class="line">    <span class="keyword">if</span> (nestedArchives != <span class="keyword">null</span>) &#123;</span><br><span class="line">        debug(<span class="string">"Adding classpath entries from nested "</span> + root);</span><br><span class="line">        lib.addAll(nestedArchives);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lib;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Convenience class for finding nested archives (archive entries that can be</span></span><br><span class="line"><span class="comment"> * classpath entries).</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ArchiveEntryFilter</span> <span class="keyword">implements</span> <span class="title">EntryFilter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DOT_JAR = <span class="string">".jar"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DOT_ZIP = <span class="string">".zip"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">matches</span><span class="params">(Entry entry)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> entry.getName().endsWith(DOT_JAR) || entry.getName().endsWith(DOT_ZIP);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在获取jar包时，<strong>将文件名后缀是.zip和.jar都视为jar包加载</strong>。然后在为zip数据保存构造字符串时，发生数组下表越界。<br>那么问题来了，如果我一定要将zip文件放在resource下面，应该怎么处理呢。继续看代码，如果是目录的话，默认是不执行递归的，就是说如果当前的path是resource，那么只会遍历到resource/xx下面，不会遍历resource/xx/xx这个目录下面的文件，也就是说resource/xx/xx/xx.zip这种情况是允许的。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/spring/" rel="tag"># spring</a>
+              <a href="/tags/springboot/" rel="tag"># springboot</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/05/10/ajax请求session超时shiro处理/" rel="prev" title="ajax请求session超时shiro处理">
+      <i class="fa fa-chevron-left"></i> ajax请求session超时shiro处理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/05/13/母亲节快乐/" rel="next" title="母亲节快乐">
+      母亲节快乐 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">panhb</p>
+  <div class="site-description" itemprop="description">你好,我是panhb,很高兴你来我的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">panhb</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
